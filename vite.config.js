@@ -12,5 +12,5 @@ export default defineConfig({
       }
     }
   },
-  base: '/kens_shop_frontend/'
+  base: '/'
 })

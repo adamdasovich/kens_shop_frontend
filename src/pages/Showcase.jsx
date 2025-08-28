@@ -10,20 +10,20 @@ import Button from '../components/ui/Button'
 const Showcase = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [viewMode, setViewMode] = useState('grid')
   const [showFilters, setShowFilters] = useState(false)
+  const [viewMode, setViewMode] = useState('grid')
 
   const { data: products, isLoading } = useQuery({
     queryKey: ['showcase-products'],
     queryFn: () => productService.getProducts(),
     staleTime: 5 * 60 * 1000
-})
+  })
 
   const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: productService.getCategories,
     staleTime: 10 * 60 * 1000
-})
+  })
 
   const filteredProducts = useMemo(() => {
     if (!products?.results) return []
@@ -31,8 +31,8 @@ const Showcase = () => {
     return products.results.filter(product => {
       const matchesSearch = searchTerm === '' || 
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.materials.toLowerCase().includes(searchTerm.toLowerCase())
+        product.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.materials?.toLowerCase().includes(searchTerm.toLowerCase())
       
       const matchesCategory = selectedCategory === '' || 
         product.category?.id.toString() === selectedCategory
@@ -248,7 +248,7 @@ const Showcase = () => {
             <div className="w-24 h-24 bg-wood-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Search className="w-12 h-12 text-wood-400" />
             </div>
-            <h3 className="text-2xl font-semibold text-wood-700 mb-4">No pieces found</h3>
+            <h3 className="text-2xl font-semibent text-wood-700 mb-4">No pieces found</h3>
             <p className="text-wood-600 mb-8 max-w-md mx-auto">
               We couldn't find any pieces matching your criteria. Try adjusting your search or filters.
             </p>

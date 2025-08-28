@@ -4,10 +4,7 @@ import { Eye, ShoppingBag, Star } from 'lucide-react'
 import { getImageUrl, handleImageError } from '../../utils/imageUtils'
 
 const ProductCard = ({ product, showActions = true }) => {
-  const { id, name, price, status, images, category } = product
-
-  // Get the primary image from the images array
-  const primaryImage = images?.find(img => img.is_primary) || images?.[0]
+  const { id, name, price, status, primary_image, category } = product
 
   const statusColors = {
     available: 'bg-green-100 text-green-800',
@@ -30,11 +27,11 @@ const ProductCard = ({ product, showActions = true }) => {
       whileHover={{ y: -5 }}
       className="card card-hover"
     >
-      {/* Image with proper URL handling */}
+      {/* Fixed Image URL handling */}
       <div className="relative overflow-hidden h-64">
         <img
-          src={getImageUrl(primaryImage?.image)}
-          alt={primaryImage?.alt_text || name}
+          src={getImageUrl(primary_image?.image)}
+          alt={primary_image?.alt_text || name}
           onError={handleImageError}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
           loading="lazy"

@@ -228,3 +228,4 @@ export const commentService = {
     }
 }
 
+export { api, BASE_URL, MEDIA_URL }

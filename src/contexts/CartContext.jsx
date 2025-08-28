@@ -10,9 +10,11 @@ const initialState = {
 }
 
 function cartReducer(state, action) {
+  console.log('🛒 Cart Action:', action.type, action.payload) // Debug log
+  
   switch (action.type) {
     case 'ADD_ITEM':
-      return {
+      const newStateAdd = {
         ...state,
         items: {
           ...state.items,
@@ -22,6 +24,8 @@ function cartReducer(state, action) {
           }
         }
       }
+      console.log('🛒 Cart after ADD_ITEM:', newStateAdd) // Debug log
+      return newStateAdd
     
     case 'REMOVE_ITEM':
       const { [action.payload]: removed, ...rest } = state.items
@@ -63,14 +67,20 @@ function cartReducer(state, action) {
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, initialState)
 
-  // Persist cart to localStorage
+  // Persist cart to localStorage (but not for Stripe data)
   useEffect(() => {
     const savedCart = localStorage.getItem('cart')
     if (savedCart) {
-      const parsedCart = JSON.parse(savedCart)
-      Object.keys(parsedCart.items).forEach(key => {
-        dispatch({ type: 'ADD_ITEM', payload: parsedCart.items[key] })
-      })
+      try {
+        const parsedCart = JSON.parse(savedCart)
+        if (parsedCart.items) {
+          Object.keys(parsedCart.items).forEach(key => {
+            dispatch({ type: 'ADD_ITEM', payload: parsedCart.items[key] })
+          })
+        }
+      } catch (error) {
+        console.error('Error loading cart from localStorage:', error)
+      }
     }
   }, [])
 
@@ -79,6 +89,7 @@ export function CartProvider({ children }) {
   }, [state])
 
   const addItem = (product) => {
+    console.log('🛒 Adding item to cart:', product) // Debug log
     dispatch({ type: 'ADD_ITEM', payload: product })
   }
 
@@ -109,6 +120,8 @@ export function CartProvider({ children }) {
   const cartItems = Object.values(state.items)
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
   const cartTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+
+  console.log('🛒 Cart State - Items:', cartCount, 'Total:', cartTotal) // Debug log
 
   const value = {
     ...state,

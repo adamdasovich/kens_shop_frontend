@@ -38,7 +38,8 @@ const CheckoutForm = () => {
   })
 
   // Create order and payment intent
-  const createOrderMutation = useMutation(orderService.createOrder, {
+  const createOrderMutation = useMutation({
+    mutationFn: orderService.createOrder,
     onSuccess: async (order) => {
       try {
         const paymentData = await paymentService.createPaymentIntent({

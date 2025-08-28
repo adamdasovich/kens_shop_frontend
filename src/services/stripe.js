@@ -1,41 +1,36 @@
 import { loadStripe } from '@stripe/stripe-js'
+import { api } from './api'
 
 let stripePromise
 
 export const getStripe = () => {
   if (!stripePromise) {
-    // Add conditional loading to suppress warning in development
-    if (import.meta.env.DEV) {
-      // Only show the warning once in development
-      if (!window.stripeWarningShown) {
-        console.info('ℹ️ Stripe: Using HTTP in development mode. HTTPS required for production.')
-        window.stripeWarningShown = true
-      }
-    }
-    
-    stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY, {
-      // Suppress console warnings in development
-      stripeAccount: undefined,
-      locale: 'en',
-    })
+    console.log('🔄 Loading Stripe with key:', import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY?.substring(0, 20) + '...')
+    stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
   }
   return stripePromise
 }
 
-// Rest of your payment service functions...
+// Payment service functions
 export const paymentService = {
   getConfig: async () => {
+    console.log('🔄 Getting Stripe config...')
     const response = await api.get('/payments/config/')
+    console.log('✅ Stripe config received:', response.data)
     return response.data
   },
 
   createPaymentIntent: async (orderData) => {
+    console.log('🔄 Creating payment intent with data:', orderData)
     const response = await api.post('/payments/create_payment_intent/', orderData)
+    console.log('✅ Payment intent created:', response.data)
     return response.data
   },
 
   confirmPayment: async (paymentData) => {
+    console.log('🔄 Confirming payment with data:', paymentData)
     const response = await api.post('/payments/confirm_payment/', paymentData)
+    console.log('✅ Payment confirmed:', response.data)
     return response.data
   },
 

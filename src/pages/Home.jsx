@@ -15,6 +15,14 @@ const Home = () => {
     staleTime: 5 * 60 * 1000
 })
 
+// TEMPORARY DEBUG - Add this to see what data Home is receiving
+  console.log('🏠 HOME PAGE - Featured products data:', featuredProducts)
+  if (featuredProducts && featuredProducts.length > 0) {
+    console.log('🏠 HOME PAGE - First product structure:', featuredProducts[0])
+    console.log('🏠 HOME PAGE - First product images:', featuredProducts[0].images)
+    console.log('🏠 HOME PAGE - First product primary_image:', featuredProducts[0].primary_image)
+  }
+
   const stats = [
     { icon: Award, number: '15+', label: 'Years Experience' },
     { icon: Users, number: '200+', label: 'Happy Clients' },
