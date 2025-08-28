@@ -7,6 +7,7 @@ import ProductCard from '../components/ui/ProductCard'
 import LoadingSpinner from '../components/ui/LoadingSpinner'
 import Button from '../components/ui/Button'
 import backlessStool from '../assets/one_stool_with_back_from_back.jpg'
+import logo from '../assets/logo_ken.jpg'
 
 const Home = () => {
   const { data: featuredProducts, isLoading } = useQuery({
@@ -207,7 +208,7 @@ const Home = () => {
               >
                 <div className="h-48 overflow-hidden mb-6">
                   <img
-                    src={feature.image}
+                    src={logo}
                     alt={feature.title}
                     className="w-full h-full object-cover"
                   />
