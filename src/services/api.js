@@ -173,7 +173,7 @@ export const orderService = {
         return response.data
     },
     cancelOrder: async (orderId) => {
-        const response = await api.post(`/orders/${orderId}/cancel`)
+        const response = await api.post(`/orders/${orderId}/cancel/`)
         return response.data
     }
 }
