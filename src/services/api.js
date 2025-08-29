@@ -1,8 +1,9 @@
 import axios from 'axios'
 import toast from 'react-hot-toast'
 
-const BASE_URL = 'http://localhost:8000/api'
-const MEDIA_URL = 'http://localhost:8000'
+// Use environment variables for URLs
+const BASE_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api`
+const MEDIA_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 // Create axios instance
 const api = axios.create({
@@ -134,8 +135,9 @@ export const authService = {
         const response = await api.get('/auth/profile/')
         return response.data
     },
-    updateProfile: async () => {
+    updateProfile: async (userData) => {
         const response = await api.put('/auth/profile/', userData)
+        return response.data
     }
 }
 
