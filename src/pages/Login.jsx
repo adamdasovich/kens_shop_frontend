@@ -6,6 +6,7 @@ import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import Button from '../components/ui/Button'
 import toast from 'react-hot-toast'
+import logoKen from '../assets/logo_ken.jpg'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -47,7 +48,7 @@ const Login = () => {
         >
           <div className="flex justify-center mb-6">
             <div className="w-16 h-16 bg-wood-700 rounded-xl flex items-center justify-center">
-              <span className="text-wood-50 font-bold text-2xl font-serif">MW</span>
+              <span className="text-wood-50 font-bold text-2xl font-serif"><img src={logoKen} alt='Kens logo' width={85} height={85}/></span>
             </div>
           </div>
           <h1 className="text-3xl font-bold text-wood-900 mb-2">Welcome Back</h1>
